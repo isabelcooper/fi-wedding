@@ -11,9 +11,9 @@ import skiing from './assets/skiing.jpeg'
 import summer from './assets/summer.jpeg'
 
 import Day from "./tabs/day"
+import Rsvp from "./tabs/rsvp"
 
 const StyledTab = styled(Tab)({
-  // fontSize: "16px",
   color: theme.palette.text.secondary,
   "&.Mui-selected": {
     color: theme.palette.primary,
@@ -23,11 +23,13 @@ const StyledTab = styled(Tab)({
 
 function App() {
   const [currentTab, setTab] = useState('day')
+  const [confetti, setConfetti] = useState<boolean>(false);
+
 
   return (
     <ThemeProvider theme={theme}>
       <Container sx={{ textAlign: "center", marginTop: "80px" }} maxWidth="md">
-        <Stack spacing={3} position="sticky">
+        <Stack spacing={3}>
           <Typography variant='title'>Ferg & Isabel</Typography>
           <Typography variant="subtitle">
             FRIDAY, AUGUST 16, 2024 • LEATHERHEAD CHURCH, SURREY
@@ -48,18 +50,25 @@ function App() {
             </Tabs>
           </Box>
         </Stack>
-        {currentTab === "day" && <Day />}
-        {currentTab === "travel" && (
-          <Stack spacing={2} margin="32px">
-            <Typography variant="subtitle">Travel & Hotels</Typography>
-            <Typography>There are probably hotels</Typography>
-          </Stack>
-        )}
-        {currentTab === "registry" && (
-          <Stack spacing={2} margin="32px">
-            <Typography variant="subtitle"> Registry</Typography>
-            <Typography>Buy us things</Typography>
+        <Box minHeight="350px" >
+          {currentTab === "day" && <Day />}
+          {currentTab === "travel" && (
+            <Stack spacing={2} margin="32px">
+              <Typography variant="subtitle">Travel & Hotels</Typography>
+              <Typography>There are probably hotels</Typography>
+            </Stack>
+          )}
+          {currentTab === "registry" && (
+            <Stack spacing={2} margin="32px">
+              <Typography variant="subtitle"> Registry</Typography>
+              <Typography>Buy us things</Typography>
 
+            </Stack>
+          )}
+          {currentTab === "rsvp" && (
+            <Rsvp confetti={confetti} setConfetti={setConfetti} />
+          )}
+        </Box>
         <ImageList sx={{ width: "100%", height: 450 }} cols={4} rowHeight={164}>
           <ImageListItem key={"summer"}>
             <img
@@ -95,7 +104,7 @@ function App() {
           </ImageListItem>
         </ImageList>
       </Container>
-    </ThemeProvider>
+    </ThemeProvider >
   )
 }
 
